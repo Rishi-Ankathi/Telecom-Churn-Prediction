@@ -6,8 +6,8 @@ import numpy as np
 df = pd.read_csv('dataset.csv')
 # Drop customerID as it's not useful for prediction
 df = df.drop('customerID', axis=1)
-# Handle TotalCharges: convert to numeric, fill NaN with median
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce').fillna(df['TotalCharges'].median())
+'''# Handle TotalCharges: convert to numeric, fill NaN with median
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce').fillna(df['TotalCharges'].median())'''
 st.title("Telecom Churn Prediction")
 st.subheader("Dataset")
 st.dataframe(df.head())
