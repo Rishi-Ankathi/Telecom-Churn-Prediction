@@ -4,10 +4,6 @@ import pandas as pd
 import numpy as np
 # Load the dataset
 df = pd.read_csv('dataset.csv')
-# Drop customerID as it's not useful for prediction
-df = df.drop('customerID', axis=1)
-'''# Handle TotalCharges: convert to numeric, fill NaN with median
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce').fillna(df['TotalCharges'].median())'''
 st.title("Telecom Churn Prediction")
 st.subheader("Dataset")
 st.dataframe(df.head())
@@ -17,9 +13,12 @@ y = df['Churn']
 # converting categorical variables to numerical variables
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
-for column in x.columns:
-    if x[column].dtype == 'object':
-        x[column] = le.fit_transform(x[column])
+for column in df.columns:
+    if df[column].dtype == 'object':
+        df[column] = le.fit_transform(df[column])
+# separating input and output variables
+x = df.drop('Churn', axis=1)
+y = df['Churn']
 #splitting training and testing data
 from sklearn.model_selection import train_test_split
 x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
