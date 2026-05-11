@@ -7,15 +7,23 @@ df = pd.read_csv('dataset.csv')
 st.title("Telecom Churn Prediction")
 st.subheader("Dataset")
 st.dataframe(df.head())
+# Preprocessing
+st.subheader("Data Preprocessing")
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+df = df.dropna()
+st.write("After handling missing values:", df.shape)
+# Encode categorical variables
+encoder = LabelEncoder()
+categorical_cols = df.select_dtypes(include=['object']).columns
+for col in categorical_cols:
+    if col != 'Churn':
+        df[col] = encoder.fit_transform(df[col])
+
+# Encode target
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
 # separating input and output variables
 x = df.drop('Churn', axis=1)
 y = df['Churn']
-# converting categorical variables to numerical variables
-from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
-for column in df.columns:
-    if df[column].dtype == 'object':
-        df[column] = le.fit_transform(df[column])
 # separating input and output variables
 x = df.drop('Churn', axis=1)
 y = df['Churn']
