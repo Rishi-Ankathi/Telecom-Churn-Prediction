@@ -13,6 +13,7 @@ df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
 df = df.dropna()
 st.write("After handling missing values:", df.shape)
 # Encode categorical variables
+from sklearn.preprocessing import LabelEncoder
 encoder = LabelEncoder()
 categorical_cols = df.select_dtypes(include=['object']).columns
 for col in categorical_cols:
